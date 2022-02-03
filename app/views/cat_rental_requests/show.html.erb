@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @cat_rental_request %>
+
+<div>
+  <%= link_to "Edit this cat rental request", edit_cat_rental_request_path(@cat_rental_request) %> |
+  <%= link_to "Back to cat rental requests", cat_rental_requests_path %>
+
+  <%= button_to "Destroy this cat rental request", @cat_rental_request, method: :delete %>
+</div>

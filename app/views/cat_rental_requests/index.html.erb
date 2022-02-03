@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Cat rental requests</h1>
+
+<div id="cat_rental_requests">
+  <% @cat_rental_requests.each do |cat_rental_request| %>
+    <%= render cat_rental_request %>
+    <p>
+      <%= link_to "Show this cat rental request", cat_rental_request %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New cat rental request", new_cat_rental_request_path %>
