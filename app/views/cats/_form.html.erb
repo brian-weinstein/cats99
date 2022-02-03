@@ -12,8 +12,8 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_area :name %>
+    <%= form.label :name, style: "display: block"%>
+    <%= form.text_field :name%>
   </div>
 
   <div>
@@ -23,12 +23,14 @@
 
   <div>
     <%= form.label :color, style: "display: block" %>
-    <%= form.text_area :color %>
+    <%= form.select :color, Cat::COLORS, prompt: 'Select a Color' %>
   </div>
 
   <div>
-    <%= form.label :sex, style: "display: block" %>
-    <%= form.text_area :sex %>
+    <%= form.label 'Male' %>
+    <%= form.radio_button :sex, 'M'%>
+    <%= form.label 'Female' %>
+    <%= form.radio_button :sex, 'F'%>
   </div>
 
   <div>
