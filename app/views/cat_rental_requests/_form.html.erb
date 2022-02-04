@@ -11,9 +11,9 @@
     </div>
   <% end %>
 
-  <div>
+ <div>
     <%= form.label :cat_id, style: "display: block" %>
-    <%= form.number_field :cat_id %>
+    <%= form.select :cat_id, Cat.all.collect{|c| [c.name,c.id]}, prompt: 'Select a Cat' %>
   </div>
 
   <div>
@@ -24,11 +24,6 @@
   <div>
     <%= form.label :end_date, style: "display: block" %>
     <%= form.date_field :end_date %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
   </div>
 
   <div>

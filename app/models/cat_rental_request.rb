@@ -13,8 +13,9 @@
 
 class CatRentalRequest < ApplicationRecord
     validates :cat_id,:start_date,:end_date,:status, presence: true
-    validates :status, inclusion: %w('APPROVED' 'PENDING' 'DENIED')
+    validates :status, inclusion: %w(APPROVED PENDING DENIED)
     validate :does_not_overlap_approved_request
+    validate :valid_date
     belongs_to :cat
 
     after_initialize :set_pending
@@ -27,7 +28,7 @@ class CatRentalRequest < ApplicationRecord
     
     def overlapping_requests
         CatRentalRequest.where.not(id: self.id).where(cat_id: self.cat.id)
-        .where.not('start_data > ? OR end_date < ?',self.end_date,self.start_date)
+        .where.not('start_date > ? OR end_date < ?',self.end_date,self.start_date)
     end
     def overlapping_approved_requests
         overlapping_requests.where(status: 'APPROVED')
@@ -36,5 +37,12 @@ class CatRentalRequest < ApplicationRecord
     def does_not_overlap_approved_request
         unless overlapping_approved_requests.empty?
             errors[:base] << "Cannot overlap an existing appointment."
+        end
+    end
+
+    def valid_date
+        return if start_date < end_date
+        errors[:start_date] << 'must come before end date'
+        errors[:end_date] << 'must come after start date'
     end
 end
