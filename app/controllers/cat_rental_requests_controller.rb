@@ -1,6 +1,15 @@
 class CatRentalRequestsController < ApplicationController
-  before_action :set_cat_rental_request, only: %i[ show edit update destroy ]
+  before_action :set_cat_rental_request, only: %i[ show edit update destroy approve deny ]
 
+  def approve
+    @cat_rental_request.approve!
+    redirect_to cat_url(@cat_rental_request.cat)
+  end
+
+  def deny
+    @cat_rental_request.deny!
+    redirect_to cat_url(@cat_rental_request.cat)
+  end
   # GET /cat_rental_requests or /cat_rental_requests.json
   def index
     @cat_rental_requests = CatRentalRequest.all
