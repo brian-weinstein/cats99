@@ -1,27 +1,33 @@
 class CatsController < ApplicationController
-  before_action :set_cat, only: %i[ show edit update destroy ]
+  before_action :require_logged_in!, only: %i(new create edit update)
 
   # GET /cats or /cats.json
   def index
     @cats = Cat.all
+    render :index
   end
 
   # GET /cats/1 or /cats/1.json
   def show
+    @cat = Cat.find(params[:id])
+    render :show
   end
 
   # GET /cats/new
   def new
     @cat = Cat.new
+    render :new
   end
 
   # GET /cats/1/edit
   def edit
+    @cat = current_user.cats.find(params[:id])
+    render :edit
   end
 
   # POST /cats or /cats.json
   def create
-    @cat = Cat.new(cat_params)
+    @cat = current_user.cats.new(cat_params)
 
     respond_to do |format|
       if @cat.save
@@ -36,6 +42,7 @@ class CatsController < ApplicationController
 
   # PATCH/PUT /cats/1 or /cats/1.json
   def update
+
     respond_to do |format|
       if @cat.update(cat_params)
         format.html { redirect_to cat_url(@cat), notice: "Cat was successfully updated." }
@@ -58,11 +65,7 @@ class CatsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cat
-      @cat = Cat.find(params[:id])
-    end
-
+    
     # Only allow a list of trusted parameters through.
     def cat_params
       params.require(:cat).permit(:name, :birth_date, :color, :sex, :description)

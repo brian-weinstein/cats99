@@ -10,6 +10,7 @@
 #  description :text             not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  user_id     :integer          not null
 #
 
 require 'action_view'
@@ -24,7 +25,10 @@ class Cat < ApplicationRecord
 
     has_many :cat_rental_requests,
         dependent: :destroy
-
+    belongs_to :owner,
+        class_name: :User,
+        foreign_key: :user_id
+        
    
 
     def age

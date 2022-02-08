@@ -1,5 +1,7 @@
 class CatRentalRequestsController < ApplicationController
   before_action :set_cat_rental_request, only: %i[ show edit update destroy approve deny ]
+  before_action :require_logged_in!
+  before_action :requires_cat_ownership, only: %i(approve deny)
 
   def approve
     @cat_rental_request.approve!
@@ -75,5 +77,9 @@ class CatRentalRequestsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def cat_rental_request_params
       params.require(:cat_rental_request).permit(:cat_id, :start_date, :end_date, :status)
+    end
+
+    def requires_cat_ownership
+      return if current_user.owns_cat?(@cat_rental_request.cat)
     end
 end

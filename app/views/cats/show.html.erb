@@ -26,7 +26,12 @@
 <%end%>
 <p>
 <div>
+ <% if :logged_in? %>
+    <a href="<%= new_cat_rental_request_url(cat_id: @cat.id) %>">Make new request</a>
+  <% end %>
+  <% if @cat.owner == current_user %>
   <%= link_to "Edit this cat", edit_cat_path(@cat) %> |
+  <% end %>
   <%= link_to "Back to cats", cats_path %>
 
   <%= button_to "Destroy this cat", @cat, method: :delete %>
