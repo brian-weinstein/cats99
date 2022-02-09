@@ -42,7 +42,7 @@ class CatsController < ApplicationController
 
   # PATCH/PUT /cats/1 or /cats/1.json
   def update
-
+    @cat = current_user.cats.find(params[:id])
     respond_to do |format|
       if @cat.update(cat_params)
         format.html { redirect_to cat_url(@cat), notice: "Cat was successfully updated." }

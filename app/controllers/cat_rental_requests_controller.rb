@@ -32,7 +32,7 @@ class CatRentalRequestsController < ApplicationController
 
   # POST /cat_rental_requests or /cat_rental_requests.json
   def create
-    @cat_rental_request = CatRentalRequest.new(cat_rental_request_params)
+    @cat_rental_request = current_user.cat_rental_requests.new(cat_rental_request_params)
 
     respond_to do |format|
       if @cat_rental_request.save

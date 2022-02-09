@@ -4,8 +4,11 @@
 <h2>Rental Requests</h2>
 
 <% @cat.cat_rental_requests.each do |rr|%>
+<b><%= rr.requester.user_name%></b>
 <%= rr.start_date%> until <%=rr.end_date%>
 <% if rr.status == 'PENDING' %>
+        
+  <% if @cat.owner == current_user %>
         <form action="<%= approve_cat_rental_request_url(rr) %>" method="post">
           <input
             type="hidden"
@@ -23,6 +26,7 @@
     <% else %>
       <%= rr.status %>
     <% end %>
+  <% end %>
 <%end%>
 <p>
 <div>
@@ -34,5 +38,4 @@
   <% end %>
   <%= link_to "Back to cats", cats_path %>
 
-  <%= button_to "Destroy this cat", @cat, method: :delete %>
 </div>
