@@ -12,15 +12,12 @@
 
   <body>
     <% if current_user.nil?%>
-      <a href="<%= new_session_url%>">Sign In</a>
-      <a href= "<%= new_user_url %>">Create User</a>
+      <%= link_to "Sign In", new_session_url%>
+      <%= link_to "Create User", new_user_url%>
     <% else%>
       <%= current_user.user_name %>
-      <form action="<%= session_url %>" method="post">
-        <input type= "hidden" name = "authenticity_token" value= "<%=form_authenticity_token%>">
-        <input type= "hidden" name="_method" value = "delete">
-        <input type="submit" value = "Logout">
-      </form>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <%= button_to "Logout", session_url, method: "delete" %>
     <%end%>
     <%= yield %>
   </body>
